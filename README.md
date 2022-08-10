@@ -20,7 +20,7 @@ Step 1) You will need to create a SA (service account) within GCP. This will giv
 
 ### Permissions needed on the SA
 
-```aidl
+```
 
   roles/monitoring.metricWriter
 
