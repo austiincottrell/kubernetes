@@ -45,3 +45,6 @@ gcloud iam service-accounts add-iam-policy-binding \
 
 Step 3) Validate everything is working correctly. Running the <em>kubectl get pods -n default</em> will show you the pods deployed in that namespace. You want to see all the pods running without any crashloopbackoff's happening. If you see those then come threw your configuration and see if anything is out of place.. indentation is common error.
 
+You will also want to go into the GCP console and navigate to the Cloud Monitoring UI. Once you are in the Cloud Monitoring section press the managed prometheus on the left side of the page to navigate to a query bar. Inside the query bar run the query UP. This will show if all the prometheus node-exporter,prometheus,and prometheus operator is up.
+
+Cheers! Happy Configuring!
