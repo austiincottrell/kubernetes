@@ -1,3 +1,3 @@
 # Kubernetes
 
-Helm chart deployments of Open Source tools
+Kuberentes Open Source tools
