@@ -1,0 +1,72 @@
+# DEV USE CASE #
+# ++++++++++++ #
+
+global:
+  namespace: default
+  
+injector:
+  resources:
+    requests:
+      memory: 25Mi
+      cpu: 10m
+    limits:
+      memory: 25Mi
+      cpu: 10m
+
+server:
+  resources:
+    requests:
+      memory: 150Mi
+      cpu: 25m
+    limits:
+      memory: 300Mi
+      cpu: 70m
+  standalone:
+    enabled: true
+    config: |
+      ui            = true
+      log_level = "Info"
+      log_format = "json"
+
+      cluster_addr  = "https://127.0.0.1:8201"
+      api_addr      = "https://127.0.0.1:8200"
+      disable_mlock = true
+
+      telemetry {
+        statsite_address = "127.0.0.1:8125"
+        disable_hostname = true
+      }
+      
+      listener "tcp" {
+        tls_disable = 1
+        address     = "0.0.0.0:8200"
+      }
+
+      storage "raft" {
+        path = "/vault/data"
+        node_id = "raft_node_1"
+      }
+  ha:
+    enabled: false
+    disruptionBudget:
+      enabled: false
+
+  extraEnvironmentVars:
+    CLUSTER_NAME: kind-kind
+
+  dataStorage:
+    enabled: true
+    size: 10Gi
+    mountPath: "/vault/data"
+    storageClass: null
+    accessMode: ReadWriteOnce
+    annotations: {}
+
+  readinessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+    
+  livenessProbe:
+    enabled: true
+    path: "/v1/sys/health?standbyok=true"
+    initialDelaySeconds: 180
